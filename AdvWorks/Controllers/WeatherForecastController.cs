@@ -13,7 +13,7 @@ namespace AdvWorks.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Sweltering", "Scorching", "cold"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
