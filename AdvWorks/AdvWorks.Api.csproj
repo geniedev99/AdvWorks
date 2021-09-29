@@ -13,5 +13,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdvWorks.Models\AdvWorks.Models.csproj" />
+    <ProjectReference Include="..\AdvWorks.Repository\AdvWorks.Repository.csproj" />
+  </ItemGroup>
+
 
 </Project>

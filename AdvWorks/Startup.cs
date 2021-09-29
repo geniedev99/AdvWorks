@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
-
+using AdvWorks.Repository.Interfaces;
+using AdvWorks.Repository;
 
 namespace AdvWorks.Api
 {
@@ -43,7 +44,11 @@ namespace AdvWorks.Api
                     },
                 });
             });
+            
+            services.AddTransient<IPersonRepository , PersonRepository > ();
+
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
