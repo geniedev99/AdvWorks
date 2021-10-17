@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using AdvWorks.Repository.Interfaces;
 using AdvWorks.Repository;
+using AdvWorks.Repository.Concrete;
 
 namespace AdvWorks.Api
 {
@@ -46,6 +47,7 @@ namespace AdvWorks.Api
             });
             
             services.AddTransient<IPersonRepository , PersonRepository > ();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
         }
         
