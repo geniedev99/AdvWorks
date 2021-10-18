@@ -34,14 +34,14 @@ namespace AdvWorks.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Zomato API",
+                    Title = "AdvWorks API",
                     Version = "v1",
                     Description = "Description for the API goes here.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Ankush Jain",
+                        Name = "AdvWorks",
                         Email = string.Empty,
-                        Url = new Uri("https://coderjony.com/"),
+                        Url = new Uri("https://advworksapi.azurewebsites.net/"),
                     },
                 });
             });

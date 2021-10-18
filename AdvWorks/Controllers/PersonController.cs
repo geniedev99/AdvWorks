@@ -23,8 +23,16 @@ namespace AdvWorks.Api.Controllers
         [Route("GetPersons")]
         public IActionResult GetPersons() 
         {
-            List<Person> people = _personRepository.GetPeople();
-            return Ok(people);
+            try
+            {
+                List<Person> people = _personRepository.GetPeople();
+                return Ok(people);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+            
         }
 
     }
