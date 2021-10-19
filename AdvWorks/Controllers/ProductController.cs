@@ -25,6 +25,26 @@ namespace AdvWorks.Api.Controllers
             return Ok(product);
         }
 
+        [HttpPost]
+        [Route("CreateProduct")]
+        public IActionResult Create([FromBody] Product product)
+        {
+            try
+            {
+                bool result = _productRepository.CreateProduct(product);
+                if (result)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
+            
+        }
 
     }
 }

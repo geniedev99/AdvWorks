@@ -17,6 +17,10 @@ namespace AdvWorks.Models
         public string Size { get; set; }
         public DateTime SellStartDate { get; set; }
         public DateTime SellEndDate { get; set; }
-
+        public int ReorderPoint { get; set; }
+        public decimal StandardCost { get; set; }
+        public int DaysToManufacture { get; set; }
+        public Guid Rowguid { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }
