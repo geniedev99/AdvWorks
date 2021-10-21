@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace AdvWorks.Repository
 {
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository :IPersonRepository
     {
         private readonly IConfiguration _configuration;
         public PersonRepository(IConfiguration configuration)
@@ -30,6 +30,47 @@ namespace AdvWorks.Repository
 
             return personList;
         
+        }
+
+
+        public bool CreatePerson(Person person) 
+        {
+            string insertSql = @"INSERT INTO Person.Person( BusinessEntityID,PersonType,NameStyle,Title ,FirstName,MiddleName,LastName, EmailPromotion , rowguid ,ModifiedDate )
+                                 values ( @BusinessEntityID,@PersonType, @NameStyle, @Title , @FirstName, @MiddleName, @LastName, @EmailPromotion, @rowguid , @ModifiedDate)";
+
+            var guid = Guid.NewGuid();
+
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("AdvWorks")))
+                {
+                    connection.Execute(insertSql, new
+                    {
+                        @BusinessEntityID = person.BusinessEntityID,
+                        @PersonType = person.PersonType,
+                        @NameStyle = person.NameStyle,
+                        @Title = person.Title,
+                        @FirstName = person.FirstName,
+                        @MiddleName = person.MiddleName,    
+                        @LastName = person.LastName,
+                        @EmailPromotion = person.EmailPromotion,
+                        @rowguid = guid,
+                        @ModifiedDate = DateTime.Now
+
+                    });
+                    return true;
+                }
+            }
+
+
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+
+
+
         }
     }
 }

@@ -8,6 +8,7 @@ namespace AdvWorks.Repository.Interfaces
 {
    public interface IPersonRepository
     {
-        public List<Person> GetPeople(); 
+        public List<Person> GetPeople();
+        public bool CreatePerson(Person person);
     }
 }

@@ -35,6 +35,28 @@ namespace AdvWorks.Api.Controllers
             
         }
 
+
+        [HttpPost]
+        [Route("CreatePerson")]
+        public IActionResult Create([FromBody] Person person)
+        {
+            try
+            {
+                bool result = _personRepository.CreatePerson(person);
+                if (result)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
+
+        }
+
     }
 
     

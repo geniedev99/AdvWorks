@@ -4,7 +4,10 @@ namespace AdvWorks.Models
 {
     public class Person
     {
+
+        public int BusinessEntityID { get; set; }
         public string PersonType { get; set; }
+        public string NameStyle { get; set; }
 
         public string Title { get; set; }
 
@@ -13,6 +16,8 @@ namespace AdvWorks.Models
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
+
+        public int EmailPromotion { get; set; }
 
         public string Demographics{ get; set; }
 
