@@ -1,6 +1,7 @@
 ﻿using AdvWorks.Models;
 using AdvWorks.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,31 @@ namespace AdvWorks.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository)
+        private readonly ILogger<ProductController> _logger;
+        public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
         {
             _productRepository = productRepository;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("GetProducts")]
         public IActionResult GetProducts()
         {
-            List<Product> product = _productRepository.GetProducts();
-            return Ok(product);
+            _logger.LogInformation("GetProducts started");
+            try
+            {
+                _logger.LogInformation("GetProducts started");
+                List<Product> product = _productRepository.GetProducts();
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.StackTrace);
+                return BadRequest(ex);
+                throw;
+            }
+            
         }
 
         [HttpPost]
@@ -31,15 +46,17 @@ namespace AdvWorks.Api.Controllers
         {
             try
             {
+                _logger.LogInformation("create product started");
                 bool result = _productRepository.CreateProduct(product);
                 if (result)
                     return Ok();
                 else
                     return BadRequest();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                _logger.LogError(ex.StackTrace);
+                return BadRequest(ex);
                 throw;
             }
 

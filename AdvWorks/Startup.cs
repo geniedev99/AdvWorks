@@ -30,17 +30,19 @@ namespace AdvWorks.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApplicationInsightsTelemetry();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "AdvWorks API",
                     Version = "v1",
-                    Description = "Description for the API goes here.",
+                    Description = "AdvWorks API",
                     Contact = new OpenApiContact
                     {
                         Name = "AdvWorks",
-                        Email = string.Empty,
+                        Email = "geniedev99@gmail.com",
                         Url = new Uri("https://advworksapi.azurewebsites.net/"),
                     },
                 });
