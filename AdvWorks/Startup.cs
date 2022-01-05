@@ -50,6 +50,8 @@ namespace AdvWorks.Api
             
             services.AddTransient<IPersonRepository , PersonRepository > ();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+
 
         }
         
