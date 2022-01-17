@@ -22,7 +22,7 @@ namespace AdvWorks.Repository.Concrete
         }
         public List<Employee> GetEmployees()
         {
-            List<Employee> empList;
+            List<Employee> empList = new List<Employee>();
             string sqlemp = "SELECT BusinessEntityID,NationalIDNumber,LoginID,JobTitle,BirthDate, MaritalStatus,Gender,HireDate,rowguid,ModifiedDate FROM HumanResources.Employee";
 
             using (var connection = new SqlConnection(connString))
@@ -32,5 +32,20 @@ namespace AdvWorks.Repository.Concrete
 
             return empList;
         }
+
+        public List<EmployeePayHistory> GetEmployeePayHistories()
+        {
+            List<EmployeePayHistory> employeePayHistories = new List<EmployeePayHistory>();
+
+            string sqlemp = "SELECT BusinessEntityID,RateChangeDate,Rate,PayFrequency,ModifiedDate FROM HumanResources.EmployeePayHistory";
+
+            using (var connection = new SqlConnection(connString))
+            {
+                employeePayHistories = connection.Query<EmployeePayHistory>(sqlemp).ToList();
+            }
+
+            return employeePayHistories;
+        }
+ 
     }
 }
