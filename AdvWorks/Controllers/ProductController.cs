@@ -37,8 +37,27 @@ namespace AdvWorks.Api.Controllers
                 return BadRequest(ex);
                 throw;
             }
-            
+
         }
+        [HttpGet]
+        [Route("GetProductDetails")]
+        public IActionResult GetProductDetails([FromQuery] int ProductID)
+        {
+            try
+            {
+                ProductDetails productDetails = _productRepository.GetProductDetails(ProductID);
+
+                return Ok(productDetails);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
+
+
+
 
         [HttpPost]
         [Route("CreateProduct")]
@@ -60,8 +79,9 @@ namespace AdvWorks.Api.Controllers
                 throw;
             }
 
-            
+
         }
+
 
     }
 }

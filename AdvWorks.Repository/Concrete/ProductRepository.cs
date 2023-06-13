@@ -13,6 +13,7 @@ namespace AdvWorks.Repository.Concrete
     public class ProductRepository : IProductRepository
     {
         private readonly IConfiguration _configuration;
+        private readonly string connString;
 
         public Guid MyGuid { get; set; }
 
@@ -25,6 +26,7 @@ namespace AdvWorks.Repository.Concrete
         public ProductRepository(IConfiguration configuration)
         {
             _configuration = configuration;
+            connString = _configuration.GetConnectionString("AdvWorks");
         }
 
 
@@ -39,9 +41,83 @@ namespace AdvWorks.Repository.Concrete
             }
 
             return productList;
-
-
         }
+
+        public ProductDetails GetProductDetails(int ProductID)
+        {
+            ProductDetails details = new ProductDetails();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    SqlCommand command = new SqlCommand("select p.ProductID,p.ProductNumber,p.Name,p.ListPrice from Production.Product p " +
+ " where p.ProductID = " + ProductID, connection);
+                    connection.Open();
+                    SqlDataReader sdr = command.ExecuteReader();
+                    if (sdr.HasRows)
+                    {
+                        while (sdr.Read())
+                        {
+                            Product product = new Product();
+
+                            details.Product.ProductId = Convert.ToInt32(sdr["ProductId"]);
+                            details.Product.ProductNumber = Convert.ToString(sdr["ProductNumber"]);
+                            details.Product.Name = Convert.ToString(sdr["Name"]);
+                            details.Product.ListPrice = Convert.ToDecimal(sdr["ListPrice"]);
+                        }
+                    }
+
+                    sdr.Close();
+
+                    SqlCommand command1 = new SqlCommand("select h.ProductID,h.StartDate,h.EndDate,h.ListPrice from Production.ProductListPriceHistory h where h.ProductID = " + ProductID, connection);
+                    //connection.Open();
+                    SqlDataReader sdr1 = command1.ExecuteReader();
+                    if (sdr1.HasRows)
+                    {
+                        while (sdr1.Read())
+                        {
+
+                            ProductListPriceHistory History = new ProductListPriceHistory();
+
+                            History.ProductID = Convert.ToInt32(sdr1["ProductId"]);
+                            History.StartDate = Convert.ToDateTime(sdr1["StartDate"]);
+                            History.EndDate = sdr1["EndDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(sdr1["EndDate"]);
+                            History.ListPrice = sdr1["ListPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(sdr1["ListPrice"]);
+
+                            details.Product.ProductListPriceHistories.Add(History);
+                        }
+                    }
+                    sdr1.Close();
+
+                    SqlCommand command2 = new SqlCommand("select  psc.ProductSubcategoryID,psc.ProductCategoryID,psc.Name as SubCategoryName ,pc.Name as CategoryName " +
+" from Production.ProductCategory pc , Production.ProductSubcategory psc, Production.Product p  where " +
+" pc.ProductCategoryID = psc.ProductCategoryID and p.ProductSubcategoryID = psc.ProductSubcategoryID and p.ProductID = " + ProductID, connection);
+
+                    SqlDataReader sdr2 = command2.ExecuteReader();
+
+                    if (sdr2.HasRows)
+                    {
+                        while (sdr2.Read())
+                        {
+                            details.Product.SubCategory.ProductSubcategoryID = Convert.ToInt32(sdr2["ProductSubcategoryID"]);
+                            details.Product.SubCategory.SubCategoryName = Convert.ToString(sdr2["SubCategoryName"]);
+                            details.Product.SubCategory.ProductCategoryID = Convert.ToInt32(sdr2["ProductCategoryID"]);
+                            details.Product.SubCategory.CategoryName = Convert.ToString(sdr2["CategoryName"]);
+
+                        }
+
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            return details;
+        }
+
 
         public bool CreateProduct(Product product)
         {
@@ -103,9 +179,9 @@ namespace AdvWorks.Repository.Concrete
             {
                 return false;
             }
-            
 
-            
+
+
         }
     }
 }

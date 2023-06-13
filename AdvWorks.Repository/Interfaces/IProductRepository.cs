@@ -8,6 +8,8 @@ namespace AdvWorks.Repository.Interfaces
     public interface IProductRepository
     {
         public List<Product> GetProducts();
+
+        public ProductDetails GetProductDetails(int ProductID);
         public bool CreateProduct(Product product);
     }
 }

@@ -19,7 +19,7 @@ namespace AdvWorks.Models
 
         public int EmailPromotion { get; set; }
 
-        public string Demographics{ get; set; }
+        public string Demographics { get; set; }
 
         public Guid rowguid { get; set; }
 

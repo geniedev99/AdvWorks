@@ -10,7 +10,7 @@ namespace AdvWorks.Models
 
         public String NationalIDNumber { get; set; }
 
-        public String  LoginID { get; set; }
+        public String LoginID { get; set; }
 
         public String JobTitle { get; set; }
 
