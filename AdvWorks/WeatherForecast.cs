@@ -1,6 +1,6 @@
 using System;
 
-namespace AdvWorks
+namespace AdvWorks.Api
 {
     public class WeatherForecast
     {
